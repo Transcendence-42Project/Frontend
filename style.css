@@ -1,0 +1,79 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: block;
+    border:1px solid black;
+}
+
+body {
+    min-height: 100vh;
+    background: black;
+    color: white;
+    cursor: none
+}
+
+.gametable
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    width:900px;
+    height:700px;
+    border: 4px solid white;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+
+.scoretable
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+    margin: 20px auto;
+    font-size: 2rem;
+}
+
+.player,
+.computer
+{
+    position: absolute;
+    height: 110px;
+    width: 20px;
+    top:45%;
+    padding:3px;
+    background: white;
+    transform: translate(-50%);
+    border-radius: 10px
+}
+
+.player {
+    left: 2%; /* 10px is half the width of the paddle */
+}
+
+.computer {
+    right: 0;
+}
+
+.ball {
+    position: absolute;
+    height: 15px;
+    width:15px;
+    background: white;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+}
+
+.net {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%,-50%);
+    width: 5px;
+    height:13px;
+    background: blueviolet;
+}
