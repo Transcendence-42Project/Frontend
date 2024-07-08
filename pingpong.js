@@ -5,87 +5,123 @@ const pScore = document.querySelector(".playerscore");
 const cScore = document.querySelector(".computerscore");
 const ball = document.querySelector(".ball");
 
-
-
 let right = false;
 let up = false;
 let isGoal = false;
 let ballVelocity = 1;
 
-/*
-let goal = new Audio("./sounds/goal.ogg")
-let bounce = new Audio(" ");
-let beep = new Audio("");
-
-*/
-
 let printScorePlayer = 0;
 let printScoreComputer = 0;
 
-for (let i = 0; i <= 69; i++)
-{
-	let net = document.createElement("div");
-	net.classList.add("net");
-	net.style.top=(20*i) +"px";
-	table.appendChild(net);
+for (let i = 0; i <= 69; i++) {
+    let net = document.createElement("div");
+    net.classList.add("net");
+    net.style.top = (25 * i) + "px";
+    table.appendChild(net);
 }
 
-let tableBounds = table.getBoundingClientRect()
+let tableBounds = table.getBoundingClientRect();
 
-window.addEventListener("keydown",(e)=> {
-    tableBounds = table.getBoundingClientRect();
-	let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"));
+// const colors = ["#FFA07A", "#98FB98", "#BC8F8F", "#FFD700", "#87CEFA", "#FFB6C1"];
+
+let keysPressed = {};
+
+window.addEventListener("keypress", (e) => {
+//    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+//    document.body.style.backgroundColor = randomColor;
 
     switch (e.key) {
         case 'w':
-            if (playerTop > tableBounds.top) {
-                player.style.top = (playerTop - 55) + "px";
-            }
+            keysPressed[0] = true;
             break;
         case 's':
-            if (playerTop + player.clientHeight  < tableBounds.bottom) {
-                player.style.top = (playerTop + 55) + "px";
-            }
+            keysPressed[1] = true;
+            break;
+        case 'y':
+            keysPressed[2] = true;
+            break;
+        case 'h':
+            keysPressed[3] = true;
             break;
         default:
             break;
-		}
-})
+    }
+});
 
-window.addEventListener("keydown",(e)=> {
-    tableBounds = table.getBoundingClientRect();
-	let computerTop = parseInt(window.getComputedStyle(computer).getPropertyValue("top"));
+window.addEventListener("keyup", (e) => {
+//   const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+//    document.body.style.backgroundColor = randomColor;
 
     switch (e.key) {
-        case 'ArrowUp':
-            if (computerTop > tableBounds.top) {
-                computer.style.top = (computerTop - 55) + "px";
-            }
+        case 'w':
+            keysPressed[0] = false;
             break;
-        case 'ArrowDown':
-            if (computerTop + computer.clientHeight  < tableBounds.bottom) {
-                computer.style.top = (computerTop + 55) + "px";
-            }
+        case 's':
+            keysPressed[1] = false;
+            break;
+        case 'y':
+            keysPressed[2] = false;
+            break;
+        case 'h':
+            keysPressed[3] = false;
             break;
         default:
             break;
-		}
-    })
+    }
+});
 
-let leftRight = Math.floor(Math.random() * 2 )
-let upDown = Math.floor(Math.random() * 2 )
-leftRight?right=true:right=false;
-upDown?up=true:up=false
+function movePlayers() {
+    tableBounds = table.getBoundingClientRect();
+    let p = player.getBoundingClientRect();
+    let c = computer.getBoundingClientRect();
+    let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"));
+    let computerTop = parseInt(window.getComputedStyle(computer).getPropertyValue("top"));
+    
+
+    if (keysPressed[0]) {
+        if (p.top - 23 >= tableBounds.top)
+            player.style.top = playerTop - 9+ "px";
+    }
+    else if (keysPressed[1]) {
+        if (p.bottom + 23 <= tableBounds.bottom)
+            player.style.top = playerTop + 9+ "px";
+    }
+
+    if (keysPressed[2]) {
+        if (c.top - 23 >= tableBounds.top)
+            computer.style.top = computerTop - 9 +"px";
+    }
+    else if (keysPressed[3]) {
+        if (c.bottom + 23 <= tableBounds.bottom)
+            computer.style.top = computerTop + 9+ "px";    
+    }
+    requestAnimationFrame(movePlayers);
+}
+
+requestAnimationFrame(movePlayers);
 
 
-let ballMove = setInterval(()=> {
+const initialPosition = () => {
+    ball.style.left = "50%";
+    ball.style.top = "50%";
+    ballVelocity = 1.3;
+    let leftRight = Math.floor(Math.random() * 2);
+    let upDown = Math.floor(Math.random() * 2);
+
+    right = leftRight === 1;
+    up = upDown === 1;
+};
+
+
+initialPosition();
+
+let ballMove = setInterval(() => {
     let playerBounds = player.getBoundingClientRect();
     let computerBounds = computer.getBoundingClientRect();
     let ballBound = ball.getBoundingClientRect();
     let ballLeft = parseInt(window.getComputedStyle(ball).getPropertyValue("left"));
-    let ballTop  = parseInt(window.getComputedStyle(ball).getPropertyValue("top"));
-    let computerY = Math.floor(ballBound.top)
-    // computer.style.top = ballTop + 1.1 +"px";
+    let ballTop = parseInt(window.getComputedStyle(ball).getPropertyValue("top"));
 
     if (right && up) 
     {
@@ -97,103 +133,61 @@ let ballMove = setInterval(()=> {
         ball.style.left = ballLeft + 1 * ballVelocity + "px";
         ball.style.top = ballTop + 1 * ballVelocity + "px";
     }
-
     else if (!right && up) 
     {
         ball.style.left = ballLeft - 1 * ballVelocity + "px";
         ball.style.top = ballTop - 1 * ballVelocity + "px";
     }
-
     else if (!right && !up) 
     {
         ball.style.left = ballLeft - 1 * ballVelocity + "px";
         ball.style.top = ballTop + 1 * ballVelocity + "px";
     }
 
-    if (Math.floor(ballBound.bottom) > tableBounds.bottom && right)
+    if (ballBound.bottom >= tableBounds.bottom) 
     {
-    //    bounce.play()
-        bounce.currentTime = 0;
         up = true;
-        right = true;
-    }
-    if (Math.floor(ballBound.bottom) > tableBounds.bottom && !right)
+    } 
+    else if (ballBound.top <= tableBounds.top) 
     {
-    //    bounce.play()
-        bounce.currentTime = 0;
-        up = true;
-        right = false;
-    }
-    if (Math.floor(ballBound.bottom) < tableBounds.top && !right)
-    {
-    //    bounce.play()
-        bounce.currentTime = 0;
         up = false;
-        right = false;
-    }
-    if (Math.floor(ballBound.bottom) < tableBounds.top && right)
-    {
-    //    bounce.play()
-        bounce.currentTime = 0;
-        up = false;
-        right = true;
     }
 
-    if ((Math.floor(ballBound.left) < Math.floor(playerBounds.right))
-        && (Math.floor(ballBound.left) < Math.floor(playerBounds.right))
-        && (Math.floor(ballBound.left) < Math.floor(playerBounds.right))
-        && (Math.floor(ballBound.left) < Math.floor(playerBounds.right))
-        && !right) {
-            // beep.play();  beep.currentTime=0;
-        ballVelocity = ballVelocity + 0.3;
-        let upDown = Math.floor(Math.random()*2)
-        up =(upDown === 0)?false:true
+    if (ballBound.left <= playerBounds.right &&
+        ballBound.top + ballBound.height >= playerBounds.top &&
+        ballBound.top <= playerBounds.bottom) 
+    {
         right = true;
-    }
-    
-    if ((Math.floor(ballBound.left) < Math.floor(computerBounds.right))
-        && (Math.floor(ballBound.left) < Math.floor(computerBounds.right))
-        && (Math.floor(ballBound.left) < Math.floor(computerBounds.right))
-        && (Math.floor(ballBound.left) < Math.floor(computerBounds.right))
-        && right) {
-            // beep.play();  beep.currentTime=0;
-        ballVelocity = ballVelocity + 0.3;
-        let upDown = Math.floor(Math.random() * 2)
-        up =(upDown === 0)?false:true
-        right = false;
+        ballVelocity += 0.1;
     }
 
-    if (Math.floor(ballBound.right) >= tableBounds.right)
+    if (ballBound.right >= computerBounds.left &&
+        ballBound.top + ballBound.height >= computerBounds.top &&
+        ballBound.top <= computerBounds.bottom) 
     {
-        // goal.play(); goal.currentTime = 0;
+        right = false;
+        ballVelocity += 0.1;
+    }
+
+    if (ballBound.right >= tableBounds.right) 
+    {
+        printScorePlayer++;
+        pScore.textContent = printScorePlayer;
+        isGoal = true;
+    }
+
+    if (ballBound.left <= tableBounds.left) 
+    {
         printScoreComputer++;
         cScore.textContent = printScoreComputer;
-        isGoal = True;
+        isGoal = true;
     }
 
-    if (Math.floor(ballBound.left) <= tableBounds.left)
-        {
-            // goal.play(); goal.currentTime = 0;
-            printScorePlayer++;
-            pScore.textContent = printScorePlayer;
-            isGoal = True;
-        }
-    
-    if (isGoal)
+    if (isGoal) 
     {
-        setTimeout(()=>{isGoal = false},650)
+        setTimeout(() => {
+            isGoal = false;
+        }, 650);
         initialPosition();
     }
-}, 1);
-
-const initialPosition=()=> {
-    ball.style.left = "50%";
-    ball.style.top = "50%";
-    ballVelocity = 1.02
-    leftRight = Math.floor(Math.random() * 2)
-    upDown = Math.floor(Math.random() * 2)
-    
-    leftRight ? (right = true):(right = false);
-    upDown ? (up = true) : (up = false)
-}
-
+}, 10);
