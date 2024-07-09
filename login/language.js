@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
       }
   
-        const response = await fetch(`language_packs/${lang}.csv`);
+        const response = await fetch(`/language_packs/${lang}.csv`);
         const text = await response.text();
         const translations = {};
         const rows = text.split('\n');
