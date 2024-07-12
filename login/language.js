@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const usernameLabel = document.getElementById("usernameLabel");
     const passwordLabel = document.getElementById("passwordLabel");
     const loginButton = document.getElementById("loginButton");
+    const registerButton = document.getElementById("registerButton");
   
     let selectedLanguage = 'tr';
     const translationsCache = {};
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
       usernameLabel.textContent = translations['usernameLabel'];
       passwordLabel.textContent = translations['passwordLabel'];
       loginButton.textContent = translations['loginButton'];
+      registerButton.textContent = translations['registerButton'];
     }
   
     languageSelect.addEventListener("change", () => {

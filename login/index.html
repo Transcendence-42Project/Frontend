@@ -1,46 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Giriş Sayfası</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Sayfası</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <label for="language">Dil / Language:</label>
-    <select id="language">
-      <option value="tr">Türkçe</option>
-      <option value="en">English</option>
-      <option value="zh">中文 (简体)</option>
-      <option value="es">Español</option>
-      <option value="hi">हिन्दी</option>
-      <option value="ar">العربية</option>
-      <option value="pt">Português</option>
-      <option value="bn">বাংলা</option>
-      <option value="ru">Русский</option>
-      <option value="ja">日本語</option>
-      <option value="de">Deutsch</option>
-      <option value="fr">Français</option>
-    </select>
+    <div class="container">
+        <label for="language">Dil / Language:</label>
+        <select id="language">
+            <option value="tr">Türkçe</option>
+            <option value="en">English</option>
+            <option value="zh">中文 (简体)</option>
+            <option value="es">Español</option>
+            <option value="hi">हिन्दी</option>
+            <option value="ar">العربية</option>
+            <option value="pt">Português</option>
+            <option value="bn">বাংলা</option>
+            <option value="ru">Русский</option>
+            <option value="ja">日本語</option>
+            <option value="de">Deutsch</option>
+            <option value="fr">Français</option>
+        </select>
 
-    <h2><span id="loginTitle">Giriş Yap</span></h2>
-    <form id="loginForm">
-      <label for="username"><span id="usernameLabel">Kullanıcı Adı:</span></label>
-      <input type="text" id="username" name="username" required><br><br>
+        <h2><span id="loginTitle">Giriş Yap</span></h2>
+        <form id="loginForm">
+            <label for="username"><span id="usernameLabel">Kullanıcı Adı:</span></label>
+            <input type="text" id="username" name="username" required><br><br>
 
-      <label for="password"><span id="passwordLabel">Şifre:</span></label>
-      <input type="password" id="password" name="password" required><br><br>
+            <label for="password"><span id="passwordLabel">Şifre:</span></label>
+            <input type="password" id="password" name="password" required><br><br>
 
-      <button type="submit"><span id="loginButton">Giriş</span></button>
-    </form>
-  </div>
+            <button type="submit" id="loginButton">Giriş</button>
 
-  <script src="language.js"></script>
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      window.location.href = '/home/index.html';
-    });
-  </script>
+            <a href="/signup/index.html" id="registerButton">Kayıt Ol</a> 
+        </form>
+    </div>
+
+    <script src="language.js"></script>
+    <script src="login.js" defer></script> 
 </body>
 </html>

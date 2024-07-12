@@ -3,3 +3,4 @@ loginTitle,Login
 usernameLabel,Username:
 passwordLabel,Password:
 loginButton,Login
+registerButton,Register
