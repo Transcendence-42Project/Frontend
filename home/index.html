@@ -24,20 +24,16 @@
 
     <script>
         function loadGame(scriptName, state) {
-            // Update history state
             history.pushState({ script: scriptName }, '', `#${state}`);
 
-            // Hide buttons and show game table
             document.getElementById('buttons').style.display = 'none';
             document.querySelector('.gametable').style.display = 'block';
 
-            // Remove any existing script elements
             const existingScript = document.getElementById('dynamic-script');
             if (existingScript) {
                 existingScript.remove();
             }
 
-            // Create a new script element
             const script = document.createElement('script');
             script.src = scriptName;
             script.id = 'dynamic-script';
@@ -46,14 +42,11 @@
             document.body.appendChild(script);
         }
 
-        // Handle back/forward navigation
         window.addEventListener('popstate', (event) => {
             if (event.state && event.state.script) {
-                // Hide buttons and show game table
                 document.getElementById('buttons').style.display = 'none';
                 document.querySelector('.gametable').style.display = 'block';
 
-                // Load the script
                 const script = document.createElement('script');
                 script.src = event.state.script;
                 script.id = 'dynamic-script';
@@ -61,11 +54,9 @@
                 script.onerror = () => console.error(`Error loading ${event.state.script}.`);
                 document.body.appendChild(script);
             } else {
-                // Show buttons and hide game table
                 document.getElementById('buttons').style.display = 'block';
                 document.querySelector('.gametable').style.display = 'none';
 
-                // Remove any existing script elements
                 const existingScript = document.getElementById('dynamic-script');
                 if (existingScript) {
                     existingScript.remove();
@@ -73,7 +64,6 @@
             }
         });
 
-        // Check initial state
         window.addEventListener('load', () => {
             if (location.hash) {
                 const state = location.hash.substring(1);
