@@ -1,14 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>42 Transcendence Online</title>
-    <link rel="stylesheet" href="style.css">  </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcendence</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
-    <h1>42 Transcendence Online</h1>
-    <div class="button-container">
-        <a href="/pingpong_1player/" class="button">Tek Kişilik</a>
-        <a href="/pingpong_2players/" class="button">İki Kişilik</a>
+    <div id="buttons">
+        <h1>Transcendence</h1>
+        <button class="tab" onclick="loadGame('2players.js', '2players')">2 Players</button>
+        <button class="tab" onclick="loadGame('1player.js', '1player')">1 Player</button>
     </div>
+    <div class="gametable" style="display: none;">
+        <div class="scoretable">
+            <div class="playerscore">0</div>
+            <div class="computerscore">0</div>
+        </div>
+        <div class="player"></div>
+        <div class="computer"></div>
+        <div class="ball"></div>
+    </div>
+
+    <script>
+        function loadGame(scriptName, state) {
+            // Update history state
+            history.pushState({ script: scriptName }, '', `#${state}`);
+
+            // Hide buttons and show game table
+            document.getElementById('buttons').style.display = 'none';
+            document.querySelector('.gametable').style.display = 'block';
+
+            // Remove any existing script elements
+            const existingScript = document.getElementById('dynamic-script');
+            if (existingScript) {
+                existingScript.remove();
+            }
+
+            // Create a new script element
+            const script = document.createElement('script');
+            script.src = scriptName;
+            script.id = 'dynamic-script';
+            script.onload = () => console.log(`${scriptName} loaded successfully.`);
+            script.onerror = () => console.error(`Error loading ${scriptName}.`);
+            document.body.appendChild(script);
+        }
+
+        // Handle back/forward navigation
+        window.addEventListener('popstate', (event) => {
+            if (event.state && event.state.script) {
+                // Hide buttons and show game table
+                document.getElementById('buttons').style.display = 'none';
+                document.querySelector('.gametable').style.display = 'block';
+
+                // Load the script
+                const script = document.createElement('script');
+                script.src = event.state.script;
+                script.id = 'dynamic-script';
+                script.onload = () => console.log(`${event.state.script} loaded successfully.`);
+                script.onerror = () => console.error(`Error loading ${event.state.script}.`);
+                document.body.appendChild(script);
+            } else {
+                // Show buttons and hide game table
+                document.getElementById('buttons').style.display = 'block';
+                document.querySelector('.gametable').style.display = 'none';
+
+                // Remove any existing script elements
+                const existingScript = document.getElementById('dynamic-script');
+                if (existingScript) {
+                    existingScript.remove();
+                }
+            }
+        });
+
+        // Check initial state
+        window.addEventListener('load', () => {
+            if (location.hash) {
+                const state = location.hash.substring(1);
+                if (state === '2players') {
+                    loadGame('2players.js', '2players');
+                } else if (state === '1player') {
+                    loadGame('1player.js', '1player');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
