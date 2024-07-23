@@ -39,6 +39,18 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
           alert('Invalid username or password'); // Or show a more specific error message
         }
     })
+
+    /*
+    .then(data => {
+    if (data.success) { // Assuming server sends success property
+        document.getElementById('loginForm').style.display = 'none';    
+        document.getElementById('homeContent').style.display = 'block';
+    }
+        else {
+        alert('Invalid username or password'); // Or show a more specific error message
+    }
+});
+   */
     .catch(error => {
         console.error('Error:', error);
         alert('An error occurred during login'); // Inform the user of the error

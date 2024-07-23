@@ -61,6 +61,60 @@ body {
 }
 
 
+.paused-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10;
+}
+
+.winner-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10;
+}
+
+.replay-button {
+    position: absolute;
+    top: 80%;
+    left: 20%;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 255, 255);
+    padding: 20px 30px;
+    border-radius: 3px;
+    font-size: 40px;
+    width: 300px; /* İstediğiniz genişliği belirleyebilirsiniz */
+    text-align: center;
+    z-index: 150;
+}
+
+
+.quit-button {
+    position: absolute;
+    top: 80%;
+    right: 20%;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 255, 255);
+    padding: 20px 30px;
+    border-radius: 3px;
+    font-size: 40px;
+    width: 300px; /* İstediğiniz genişliği belirleyebilirsiniz */
+    text-align: center;
+    z-index: 150;
+}
 .scoretable
 {
     display: flex;

@@ -13,6 +13,11 @@
         <button class="tab" onclick="loadGame('1player.js', '1player')">1 Player</button>
     </div>
     <div class="gametable" style="display: none;">
+        <div class="paused-message">PAUSED<br>tap space to continue</div>
+        <div class="winner-message"></div>
+        <button class="replay-button" style="display: none;">REPLAY</button>
+        <button class="quit-button" style="display: none;">QUIT</button>
+
         <div class="scoretable">
             <div class="playerscore">0</div>
             <div class="computerscore">0</div>
@@ -37,8 +42,6 @@
             const script = document.createElement('script');
             script.src = scriptName;
             script.id = 'dynamic-script';
-            script.onload = () => console.log(`${scriptName} loaded successfully.`);
-            script.onerror = () => console.error(`Error loading ${scriptName}.`);
             document.body.appendChild(script);
         }
 
@@ -50,10 +53,9 @@
                 const script = document.createElement('script');
                 script.src = event.state.script;
                 script.id = 'dynamic-script';
-                script.onload = () => console.log(`${event.state.script} loaded successfully.`);
-                script.onerror = () => console.error(`Error loading ${event.state.script}.`);
                 document.body.appendChild(script);
-            } else {
+            }
+            else {
                 document.getElementById('buttons').style.display = 'block';
                 document.querySelector('.gametable').style.display = 'none';
 

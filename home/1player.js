@@ -166,3 +166,5 @@ let ballMove = setInterval(() => {
         initialPosition();
     }
 }, 10);
+
+
